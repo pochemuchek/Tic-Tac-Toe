@@ -33,12 +33,14 @@ FIELD::~FIELD()
 int FIELD::OpportunityOfMove(int x, int y){
     if(x > w || y > h){
         cout<<"chose corect coor"<<endl;
-        system("pause");
+        system("pause");    //это не надо
         return -1;
     }
     if(field[x][y] != SYMBOL::no ){
         cout<<"Place are closed"<<endl;
-        system("pause");
+        system("pause");    //это тоже не надо..., обычно это вызывает некоторый ступор, что с этим делать?, и лучше cout из этого метода вынести в другое место
+                    //блюдём концепцию, функция должна делать что-то одно, либо выводить информацию на экран, либо ...
+                // если так оставить, потом будет сложно навешивать GUI
         return -1;
     }
     else{
@@ -76,16 +78,17 @@ void FIELD::ShowField(){
     }
     cout << endl;
 }
-
+//это две переменные самое большое зло!!!... убери их в класс
 int X_count = 0;
 int O_count = 0;
 
 int FIELD::CheakWinner()
 {
     if(CheakWinHorizontal() == true){
-    O_count = 0;
-    X_count = 0;
-    return 1;
+//вот такое выравнивание надо делать....
+        O_count = 0;
+        X_count = 0;
+        return 1;
     }
     if(CheakWinVertical() == true){
     O_count = 0;
@@ -102,6 +105,8 @@ int FIELD::CheakWinner()
     X_count = 0;
     return 1;
     }
+
+    //если функция доберётся до этой строчки то, что будет возращать?? надо return
 }
 
 bool FIELD::CheakWinVertical()
@@ -127,8 +132,9 @@ bool FIELD::CheakWinVertical()
         }
         O_count = 0;
         X_count = 0;
-        return false;
+        return false; //в этом мест второй цикл выполняться не будет!!!!
     }
+    //аналогично предыдущему комментарию
 }
 
 bool FIELD::CheakWinHorizontal()
@@ -154,7 +160,7 @@ bool FIELD::CheakWinHorizontal()
         }
         O_count = 0;
         X_count = 0;
-        return false;
+        return false;   //внешний цикл не выполняется...
     }
 }
 
