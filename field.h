@@ -1,6 +1,7 @@
 #ifndef FIELD_H
 #define FIELD_H
 #include "global.h"
+#include "player.h"
 #include <iostream>
 
 
@@ -16,7 +17,10 @@ private :
    bool CheakWinDiagLeft();
    bool CheakWinDiagRight();
 
+   friend class PLAYER;
+
 public:
+
     int MaxMov = w*h;
     int count = 0;
     FIELD();
@@ -26,6 +30,10 @@ public:
 
     void ShowField();
     int CheakWinner();
+
+    int X_count = 0;
+    int O_count = 0;
+
 
 };
 

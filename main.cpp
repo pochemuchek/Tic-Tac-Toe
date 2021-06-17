@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
                                SYMBOL::tic);
 
     PLAYER *second = new PLAYER(field_TicTacToe,
-                               TYPE_PLAYER::human,
+                               TYPE_PLAYER::AI,
                                SYMBOL::tac);
     field_TicTacToe->ShowField();
 
@@ -21,6 +21,8 @@ int main(int argc, char *argv[])
     int y = 0;
     int count = 0;
 
+    if(first->type_player == TYPE_PLAYER::human &&
+       second->type_player == TYPE_PLAYER::human){
     while(count < 9) {
         do {
             cout << "first player\n";
@@ -31,13 +33,13 @@ int main(int argc, char *argv[])
             count++;
 
             if(field_TicTacToe->OpportunityOfMove(x,y) == -1){
-                cout << "first player\n";
-                cout << "enter x = ";
-                cin >> x;
-                cout << "enter y = ";
-                cin >> y;
+            cout << "first player\n";
+            cout << "enter x = ";
+            cin >> x;
+            cout << "enter y = ";
+            cin >> y;
             }
-        }while (first->MakeMove(x, y) == ERRORS::YES);
+        }while (first->MakeMove(x, y,first->type_player) != ERRORS::YES);
         field_TicTacToe->ShowField();
             if(field_TicTacToe->CheakWinner() == 1){
                 field_TicTacToe->CheakWinner();
@@ -58,12 +60,49 @@ int main(int argc, char *argv[])
                 cin >> y;
             }
         }
-         while (second->MakeMove(x, y) == ERRORS::YES);
+         while (second->MakeMove(x, y, second->type_player) != ERRORS::YES);
          field_TicTacToe->ShowField();
             if(field_TicTacToe->CheakWinner() == 1){
                 field_TicTacToe->CheakWinner();
                 break;
          }
+    }
+    }
+
+    if(first->type_player == TYPE_PLAYER::AI ||
+       second->type_player == TYPE_PLAYER::AI){
+        while(count < 9) {
+            do {
+                cout << "player\n";
+                cout << "enter x = ";
+                cin >> x;
+                cout << "enter y = ";
+                cin >> y;
+                count++;
+
+                if(field_TicTacToe->OpportunityOfMove(x,y) == -1){
+                    cout << "player\n";
+                    cout << "enter x = ";
+                    cin >> x;
+                    cout << "enter y = ";
+                    cin >> y;
+                }
+            }while (first->MakeMove(x, y,first->type_player) != ERRORS::YES);
+            field_TicTacToe->ShowField();
+                if(field_TicTacToe->CheakWinner() == 1){
+                    field_TicTacToe->CheakWinner();
+                    break;
+                }
+                //===
+            do{
+                second->MakeMove(x,y,second->type_player);
+            }while(second->MakeMove(x,y,second->type_player) != ERRORS::YES);
+            field_TicTacToe->ShowField();
+                if(field_TicTacToe->CheakWinner() == 1){
+                    field_TicTacToe->CheakWinner();
+                    break;
+                }
+        }
     }
 
     delete first;
