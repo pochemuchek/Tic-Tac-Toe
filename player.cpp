@@ -18,28 +18,28 @@ PLAYER::PLAYER(FIELD *field, int type_pl, char symbol_player)
     }
 }
 
-int PLAYER::MakeMove(int x, int y, char type_player)
+int PLAYER::MakeMovePL(int x, int y, char type_player)
 {
     std::cout<<"MAkeMOve";
     std::pair<std::pair<int, int>, char> Information;
     if(type_player == TYPE_PLAYER::human){
-        return current_field->MakeMove(x,y,symbol);
+        return current_field->MakeMoveF(x,y,symbol);
     }
     else if(type_player == TYPE_PLAYER::AI){
         if(GetWinnerMove(symbol).first.first == -1){
             Information = GetBetterMove(symbol);
-            return current_field->MakeMove(Information.first.first,
-                                           Information.first.second,
+            return current_field->MakeMoveF(Information.first.second,
+                                           Information.first.first,
                                            Information.second);
 
         }else{
             Information = GetWinnerMove(symbol);
-            return current_field->MakeMove(Information.first.first,
+            return current_field->MakeMoveF(Information.first.first,
                                            Information.first.second,
                                            Information.second);
         }
     }
-    return -1;
+    return ERRORS::YES;
 }
 
 bool PLAYER::SearchForAi(int type_search, char symb, int line)
@@ -86,6 +86,7 @@ std::pair<std::pair<int, int>, char> PLAYER::GetBetterMove(char symb)
 {
     std::pair<std::pair<int, int>,std::pair<int, char>> Infor;
     std::pair<std::pair<int, int>, char> Information;
+
     if(count_move<1){
         count_move++;
         GetFirstMoveOnAngle(symb) = Infor;
@@ -110,7 +111,8 @@ std::pair<std::pair<int, int>,std::pair<int, char>> PLAYER::GetFirstMoveOnAngle(
         Information.second.second = symb;
         return Information;
     }
-    else if(current_field->field[0][0] == SYMBOL::no){
+    else if(current_field->field[0][0] == SYMBOL::no &&
+            current_field->field[1][1] != symb){
         Information.first.first = 0;
         Information.first.second = 0;
         Information.second.first = 2;
@@ -134,7 +136,8 @@ std::pair<std::pair<int, int>,std::pair<int, char>> PLAYER::GetFirstMoveOnAngle(
         Information.second.first = 4;
         Information.second.second = symb;
         return Information;
-    }else if(current_field->field[2][2] != symb &&
+    }
+    else if(current_field->field[2][2] != symb &&
              current_field->field[2][2] != SYMBOL::no &&
              current_field->field[0][2] == SYMBOL::no){
          Information.first.first = 0;

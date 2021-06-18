@@ -42,7 +42,7 @@ int FIELD::OpportunityOfMove(int x, int y){
     }
 }
 
-int FIELD::MakeMove(int x, int y, char symb)
+int FIELD::MakeMoveF(int x, int y, char symb)
 {
     if(FIELD::OpportunityOfMove(x,y) == 1){
         field[x][y] = symb;

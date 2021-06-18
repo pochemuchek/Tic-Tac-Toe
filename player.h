@@ -24,7 +24,7 @@ public:
     int type_player;
     int count = 0;
     PLAYER(FIELD* field, int type_pl, char symbol_player);
-    int MakeMove(int x, int y, char type_player);
+    int MakeMovePL(int x, int y, char type_player);
     int count_move = 0;
 
     bool SearchForAi(int type_search, char symb, int line);

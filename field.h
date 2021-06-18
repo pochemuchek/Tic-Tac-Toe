@@ -26,7 +26,7 @@ public:
     FIELD();
     ~FIELD();
     int OpportunityOfMove(int x, int y);
-    int MakeMove(int x, int y, char symb = SYMBOL::no);
+    int MakeMoveF(int x, int y, char symb = SYMBOL::no);
 
     void ShowField();
     int CheakWinner();

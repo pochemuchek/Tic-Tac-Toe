@@ -39,10 +39,9 @@ int main(int argc, char *argv[])
             cout << "enter y = ";
             cin >> y;
             }
-        }while (first->MakeMove(x, y,first->type_player) != ERRORS::YES);
+        }while (first->MakeMovePL(x, y,first->type_player) != ERRORS::YES);
         field_TicTacToe->ShowField();
             if(field_TicTacToe->CheakWinner() == 1){
-                field_TicTacToe->CheakWinner();
                 break;
             }
         do {
@@ -60,10 +59,9 @@ int main(int argc, char *argv[])
                 cin >> y;
             }
         }
-         while (second->MakeMove(x, y, second->type_player) != ERRORS::YES);
+         while (second->MakeMovePL(x, y, second->type_player) != ERRORS::YES);
          field_TicTacToe->ShowField();
             if(field_TicTacToe->CheakWinner() == 1){
-                field_TicTacToe->CheakWinner();
                 break;
          }
     }
@@ -87,20 +85,20 @@ int main(int argc, char *argv[])
                     cout << "enter y = ";
                     cin >> y;
                 }
-            }while (first->MakeMove(x, y,first->type_player) != ERRORS::YES);
+            }while (first->MakeMovePL(x, y,first->type_player) != ERRORS::YES);
             field_TicTacToe->ShowField();
+
                 if(field_TicTacToe->CheakWinner() == 1){
-                    field_TicTacToe->CheakWinner();
                     break;
+
                 }
-                //===
-            do{
-                second->MakeMove(x,y,second->type_player);
-            }while(second->MakeMove(x,y,second->type_player) != ERRORS::YES);
-            field_TicTacToe->ShowField();
-                if(field_TicTacToe->CheakWinner() == 1){
-                    field_TicTacToe->CheakWinner();
-                    break;
+             cout<<"AI think..."<<endl;
+             cout<<second->MakeMovePL(x,y,second->type_player)<<endl;
+             system("pause");
+             field_TicTacToe->ShowField();
+
+             if(field_TicTacToe->CheakWinner() == 1){
+                 break;
                 }
         }
     }
