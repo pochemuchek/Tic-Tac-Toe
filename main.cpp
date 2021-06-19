@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
             cout << "enter y = ";
             cin >> y;
             }
-        }while (first->MakeMovePL(x, y,first->type_player) != ERRORS::YES);
+        }while (first->MakeMovePL(x, y,first->type_player, field_TicTacToe) != ERRORS::YES);
         field_TicTacToe->ShowField();
             if(field_TicTacToe->CheakWinner() == 1){
                 break;
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
                 cin >> y;
             }
         }
-         while (second->MakeMovePL(x, y, second->type_player) != ERRORS::YES);
+         while (second->MakeMovePL(x, y, second->type_player, field_TicTacToe) != ERRORS::YES);
          field_TicTacToe->ShowField();
             if(field_TicTacToe->CheakWinner() == 1){
                 break;
@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
                     cout << "enter y = ";
                     cin >> y;
                 }
-            }while (first->MakeMovePL(x, y,first->type_player) != ERRORS::YES);
+            }while (first->MakeMovePL(x, y,first->type_player, field_TicTacToe) != ERRORS::YES);
             field_TicTacToe->ShowField();
 
                 if(field_TicTacToe->CheakWinner() == 1){
@@ -93,8 +93,7 @@ int main(int argc, char *argv[])
 
                 }
              cout<<"AI think..."<<endl;
-             cout<<second->MakeMovePL(x,y,second->type_player)<<endl;
-             system("pause");
+             cout<<second->MakeMovePL(x,y,second->type_player, field_TicTacToe)<<endl;
              field_TicTacToe->ShowField();
 
              if(field_TicTacToe->CheakWinner() == 1){

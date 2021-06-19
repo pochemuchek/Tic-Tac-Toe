@@ -18,31 +18,31 @@ PLAYER::PLAYER(FIELD *field, int type_pl, char symbol_player)
     }
 }
 
-int PLAYER::MakeMovePL(int x, int y, char type_player)
+int PLAYER::MakeMovePL(int x, int y, char type_player, FIELD* current_field)
 {
-    std::cout<<"MAkeMOve";
-    std::pair<std::pair<int, int>, char> Information;
     if(type_player == TYPE_PLAYER::human){
         return current_field->MakeMoveF(x,y,symbol);
     }
     else if(type_player == TYPE_PLAYER::AI){
-        if(GetWinnerMove(symbol).first.first == -1){
-            Information = GetBetterMove(symbol);
-            return current_field->MakeMoveF(Information.first.second,
-                                           Information.first.first,
-                                           Information.second);
+        std::cout<<"MAkeMOve";
+        std::pair<std::pair<int, int>, char> InformationMM;
+        if(GetWinnerMove(symbol, current_field).first.first == -1){
+            InformationMM = GetBetterMove(symbol, current_field);
+            return current_field->MakeMoveF(InformationMM.first.second,//информация правильно доходит
+                                           InformationMM.first.first,
+                                           InformationMM.second);
 
         }else{
-            Information = GetWinnerMove(symbol);
-            return current_field->MakeMoveF(Information.first.first,
-                                           Information.first.second,
-                                           Information.second);
+            InformationMM = GetWinnerMove(symbol, current_field);
+            return current_field->MakeMoveF(InformationMM.first.first,
+                                           InformationMM.first.second,
+                                           InformationMM.second);
         }
     }
     return ERRORS::YES;
 }
 
-bool PLAYER::SearchForAi(int type_search, char symb, int line)
+bool PLAYER::SearchForAi(int type_search, char symb, int line, FIELD* current_field)
 {
     count = 0;
     switch(type_search){
@@ -82,171 +82,173 @@ bool PLAYER::SearchForAi(int type_search, char symb, int line)
     }
 }
 
-std::pair<std::pair<int, int>, char> PLAYER::GetBetterMove(char symb)
+std::pair<std::pair<int, int>, char> PLAYER::GetBetterMove(char symb, FIELD* current_field)
 {
-    std::pair<std::pair<int, int>,std::pair<int, char>> Infor;
-    std::pair<std::pair<int, int>, char> Information;
+    std::pair<std::pair<int, int>, char> InformationBM;
 
     if(count_move<1){
         count_move++;
-        GetFirstMoveOnAngle(symb) = Infor;
-        Information.first.first = Infor.first.first;
-        Information.first.first = Infor.first.second;
-        Information.second = Infor.second.second;
-        return Information;
+        GetFirstMoveOnAngle(symb, current_field);
+        InformationBM.first.first = InformationFist.first.first;
+        InformationBM.first.second = InformationFist.first.second;
+        InformationBM.second = InformationFist.second.second;
+        return InformationBM;
     }
     else{
-        return GetSecondMoveOnAngle(symb);
+        return GetSecondMoveOnAngle(symb, current_field);
     }
 }
 
-std::pair<std::pair<int, int>,std::pair<int, char>> PLAYER::GetFirstMoveOnAngle(char symb)
+void PLAYER::GetFirstMoveOnAngle(char symb, FIELD* current_field)
 {
     std::cout<<"First";
-    std::pair<std::pair<int, int>,std::pair<int, char>> Information;//пара пар
     if(current_field->field[1][1] == SYMBOL::no){
-        Information.first.first = 1;
-        Information.first.second = 1;
-        Information.second.first = 1;
-        Information.second.second = symb;
-        return Information;
+        InformationFist.first.first = 1;
+        InformationFist.first.second = 1;
+        InformationFist.second.first = 1;
+        InformationFist.second.second = symb;
+
     }
     else if(current_field->field[0][0] == SYMBOL::no &&
             current_field->field[1][1] != symb){
-        Information.first.first = 0;
-        Information.first.second = 0;
-        Information.second.first = 2;
-        Information.second.second = symb;
-        return Information;
+        InformationFist.first.first = 0;
+        InformationFist.first.second = 0;
+        InformationFist.second.first = 2;
+        InformationFist.second.second = symb;
+
     }
     else if(current_field->field[0][0] != symb &&
             current_field->field[0][0] != SYMBOL::no &&
             current_field->field[2][0] == SYMBOL::no){
-        Information.first.first = 2;
-        Information.first.second = 0;
-        Information.second.first = 3;
-        Information.second.second = symb;
-        return Information;
+        InformationFist.first.first = 2;
+        InformationFist.first.second = 0;
+        InformationFist.second.first = 3;
+        InformationFist.second.second = symb;
+
     }
     else if(current_field->field[2][0] != symb &&
             current_field->field[2][0] != SYMBOL::no &&
             current_field->field[2][2] == SYMBOL::no){
-        Information.first.first = 2;
-        Information.first.second = 2;
-        Information.second.first = 4;
-        Information.second.second = symb;
-        return Information;
+        InformationFist.first.first = 2;
+        InformationFist.first.second = 2;
+        InformationFist.second.first = 4;
+        InformationFist.second.second = symb;
+
     }
     else if(current_field->field[2][2] != symb &&
              current_field->field[2][2] != SYMBOL::no &&
              current_field->field[0][2] == SYMBOL::no){
-         Information.first.first = 0;
-         Information.first.second = 2;
-         Information.second.first = 5;
-         Information.second.second = symb;
-         return Information;
+         InformationFist.first.first = 0;
+         InformationFist.first.second = 2;
+         InformationFist.second.first = 5;
+         InformationFist.second.second = symb;
+
+    }else{
+    InformationFist.first.first = 2;
+    InformationFist.first.second = 2;
+    InformationFist.second.first = 6;
+    InformationFist.second.second = symb;
+
     }
-    Information.second.first = -1;
-    return Information;
 }
 
-std::pair<std::pair<int, int>, char> PLAYER::GetSecondMoveOnAngle(char symb)
+std::pair<std::pair<int, int>, char> PLAYER::GetSecondMoveOnAngle(char symb, FIELD* current_field)
 {
     std::cout<<"Second";
-    std::pair<std::pair<int, int>, char> Information;
-    if(GetFirstMoveOnAngle(symb).second.second == 1){
-        GetFirstMoveOnAngle(symb);
+    std::pair<std::pair<int, int>, char> InformationSecond;
+    if(InformationFist.second.first == 1){
+        GetFirstMoveOnAngle(symb, current_field);
     }
-    else if(GetFirstMoveOnAngle(symb).second.second == 2){
+    else if(InformationFist.second.first == 2){
         if(current_field->field[0][2] == SYMBOL::no){
-            Information.first.first = 0;
-            Information.first.second = 2;
-            Information.second = symb;
-            return Information;
+            InformationSecond.first.first = 0;
+            InformationSecond.first.second = 2;
+            InformationSecond.second = symb;
+            return InformationSecond;
         }
         else{
-            Information.first.first = 2;
-            Information.first.second = 0;
-            Information.second = symb;
-            return Information;
+            InformationSecond.first.first = 2;
+            InformationSecond.first.second = 0;
+            InformationSecond.second = symb;
+            return InformationSecond;
         }
     }
-    else if(GetFirstMoveOnAngle(symb).second.second == 3){
+    else if(InformationFist.second.first == 3){
         if(current_field->field[2][2] == SYMBOL::no){
-            Information.first.first = 0;
-            Information.first.second = 0;
-            Information.second = symb;
-            return Information;
+            InformationSecond.first.first = 0;
+            InformationSecond.first.second = 0;
+            InformationSecond.second = symb;
+            return InformationSecond;
         }
         else{
-            Information.first.first = 2;
-            Information.first.second = 2;
-            Information.second = symb;
-            return Information;
+            InformationSecond.first.first = 2;
+            InformationSecond.first.second = 2;
+            InformationSecond.second = symb;
+            return InformationSecond;
         }
     }
-    else if(GetFirstMoveOnAngle(symb).second.second == 4){
+    else if(InformationFist.second.first == 4){
         if(current_field->field[0][2] == SYMBOL::no){
-            Information.first.first = 0;
-            Information.first.second = 2;
-            Information.second = symb;
-            return Information;
+            InformationSecond.first.first = 0;
+            InformationSecond.first.second = 2;
+            InformationSecond.second = symb;
+            return InformationSecond;
         }
         else{
-            Information.first.first = 2;
-            Information.first.second = 0;
-            Information.second = symb;
-            return Information;
+            InformationSecond.first.first = 2;
+            InformationSecond.first.second = 0;
+            InformationSecond.second = symb;
+            return InformationSecond;
         }
     }
-    else if(GetFirstMoveOnAngle(symb).second.second == 5){
+    else if(InformationFist.second.first == 5){
         if(current_field->field[0][0] == SYMBOL::no){
-            Information.first.first = 0;
-            Information.first.second = 0;
-            Information.second = symb;
-            return Information;
+            InformationSecond.first.first = 0;
+            InformationSecond.first.second = 0;
+            InformationSecond.second = symb;
+            return InformationSecond;
         }
         else{
-            Information.first.first = 2;
-            Information.first.second = 2;
-            Information.second = symb;
-            return Information;
+            InformationSecond.first.first = 2;
+            InformationSecond.first.second = 2;
+            InformationSecond.second = symb;
+            return InformationSecond;
         }
     }
-        Information.first.first = -1;
-        return Information;
+        InformationSecond.first.first = -1;
+        return InformationSecond;
 }
 
-std::pair<std::pair<int, int>, char> PLAYER::GetWinnerMove(char symb)
+std::pair<std::pair<int, int>, char> PLAYER::GetWinnerMove(char symb, FIELD* current_field)
 {
     std::cout<<"Winner";
-    std::pair<std::pair<int, int>, char> Information;
+    std::pair<std::pair<int, int>, char> InformationWM;
 
     for(int i = 0; i < 3; i++){//исчем где из верт/столбов есть два знака
-        if(SearchForAi(0,symb,i) == true){//проверяем наличие двух знаков в одном из столбцов
+        if(SearchForAi(0, symb, i, current_field) == true){//проверяем наличие двух знаков в одном из столбцов
             for(int j = 0; j <= i; j++){//исчем свободное место на этом столбе
                 if(current_field->field[j][i] == SYMBOL::no){
-                    Information.first.first = i;
-                    Information.first.second = j;
-                    Information.second = symb;
-                    return Information;//выводим координаты
+                    InformationWM.first.first = i;
+                    InformationWM.first.second = j;
+                    InformationWM.second = symb;
+                    return InformationWM;//выводим координаты
                }
             }
         }
     }
 
     for(int i = 0; i < 3; i++){//исчем где из горизонтальных столбов есть два знака
-        if(SearchForAi(1,symb,i) == true){//проверяем наличие двух знаков
+        if(SearchForAi(1, symb, i, current_field) == true){//проверяем наличие двух знаков
             for(int j = 0; j <= i; j++){//ищем свободное место на этом столбе
                 if(current_field->field[i][j] != symb){
-                    Information.first.first = j;
-                    Information.first.second = i;
-                    Information.second = symb;
-                    return Information;//выводим координаты
+                    InformationWM.first.first = j;
+                    InformationWM.first.second = i;
+                    InformationWM.second = symb;
+                    return InformationWM;//выводим координаты
                 }
             }
         }
     }
-    Information.first.first = -1;
-    return Information;
+    InformationWM.first.first = -1;
+    return InformationWM;
 }
