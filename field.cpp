@@ -30,7 +30,7 @@ FIELD::~FIELD()
     delete [] field;
 }
 
-int FIELD::OpportunityOfMove(int x, int y){
+int FIELD::isMovePossible(int x, int y){
     if(x > w || y > h){
         return -1;
     }
@@ -44,7 +44,7 @@ int FIELD::OpportunityOfMove(int x, int y){
 
 int FIELD::MakeMoveF(int x, int y, char symb)
 {
-    if(FIELD::OpportunityOfMove(x,y) == 1){
+    if(FIELD::isMovePossible(x,y) == 1){
         field[x][y] = symb;
         count++;
         return ERRORS::YES;
@@ -74,29 +74,23 @@ void FIELD::ShowField(){
     cout << endl;
 }
 
-int FIELD::CheakWinner()
+int FIELD::CheckWinner()
 {
+    //please write it's with usage ternary operator
     if(CheakWinHorizontal() == true){
-    O_count = 0;
-    X_count = 0;
-    return 1;
+        return ERRORS::WINNER;
     }
     if(CheakWinVertical() == true){
-    O_count = 0;
-    X_count = 0;
-    return 1;
+        return ERRORS::WINNER;
     }
     if(CheakWinDiagLeft() == true){
-    O_count = 0;
-    X_count = 0;
-    return 1;
+        return ERRORS::WINNER;
     }
     if(CheakWinDiagRight() == true){
-    O_count = 0;
-    X_count = 0;
-    return 1;
+        return ERRORS::WINNER;
     }
-    return -1;
+
+    return ERRORS::NEXT_MOVE;
 }
 
 bool FIELD::CheakWinVertical()
@@ -111,10 +105,8 @@ bool FIELD::CheakWinVertical()
             }
 
             if(O_count == w){
-                cout<<"(0)-is winv"<< endl;
                 return true;
             }else if(X_count == w){
-                cout<<"(X)-is winv"<< endl;
                 return true;
             }
         }
@@ -126,8 +118,11 @@ bool FIELD::CheakWinVertical()
 
 bool FIELD::CheakWinHorizontal()
 {
-    for(int i = 0; i < h; i++){
-        for(int j = 0; j < w; j++){
+    for(int i = 0; i < h; i++, O_count = 0, X_count = 0){
+        O_count = 0;
+        X_count = 0;
+
+        for(int j = 0; j < w; j++) {
             if(field[j][i] == SYMBOL::tac && field[j][i] != SYMBOL::no){
                 O_count++;
             }
@@ -136,15 +131,14 @@ bool FIELD::CheakWinHorizontal()
             }
 
             if(O_count == w){
-                cout<<"(0)-is winh"<< endl;
+//                cout<<"(0)-is winh"<< endl;
                 return true;
-            }else if(X_count == w){
-                cout<<"(X)-is winh"<< endl;
+            }
+            else if(X_count == w){
+//                cout<<"(X)-is winh"<< endl;
                 return true;
             }
         }
-        O_count = 0;
-        X_count = 0;
     }
     return false;
 }
@@ -159,10 +153,8 @@ bool FIELD::CheakWinDiagLeft()
             X_count++;
         }
         if(O_count == w){
-            cout<<"(0)-is windl"<< endl;
             return true;
         }else if(X_count == w){
-            cout<<"(X)-is windl"<< endl;
             return true;
         }
     }
@@ -183,10 +175,9 @@ bool FIELD::CheakWinDiagRight()
             }
 
             if(O_count == (1 + w)){
-                cout<<"(0)-is windr"<< endl;
                 return true;
-            }else if(X_count ==(1 + w)){
-                cout<<"(X)-is windr"<< endl;
+            }
+            else if(X_count ==(1 + w)){
                 return true;
             }
         }

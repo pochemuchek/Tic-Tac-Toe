@@ -223,6 +223,7 @@ std::pair<std::pair<int, int>, char> PLAYER::GetWinnerMove(char symb, FIELD* cur
 {
     std::cout<<"Winner";
     std::pair<std::pair<int, int>, char> InformationWM;
+//    std::tuple<int,int,char> InformationWM;
 
     for(int i = 0; i < 3; i++){//исчем где из верт/столбов есть два знака
         if(SearchForAi(0, symb, i, current_field) == true){//проверяем наличие двух знаков в одном из столбцов

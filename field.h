@@ -25,11 +25,11 @@ public:
     int count = 0;
     FIELD();
     ~FIELD();
-    int OpportunityOfMove(int x, int y);
+    int isMovePossible(int x, int y);
     int MakeMoveF(int x, int y, char symb = SYMBOL::no);
 
     void ShowField();
-    int CheakWinner();
+    int CheckWinner();
 
     int X_count = 0;
     int O_count = 0;

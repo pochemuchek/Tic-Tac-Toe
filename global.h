@@ -1,7 +1,6 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-
 enum SYMBOL { //новые типы которые мы придумали, их перечисление
     tic = 'X',
     tac = 'O',
@@ -10,11 +9,11 @@ enum SYMBOL { //новые типы которые мы придумали, их
 
 enum ERRORS{
     YES,
+    WINNER = 1,
     NO_WIN_MOVE,
-    WIN,
     NOT_MY_MOVE,
     DRAW,
-
+    NEXT_MOVE,
 };
 
 enum TYPE_PLAYER {
@@ -22,4 +21,6 @@ enum TYPE_PLAYER {
     human = 1,
     AI = 2,
 };
+
+
 #endif // GLOBAL_H
