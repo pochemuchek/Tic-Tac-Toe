@@ -10,8 +10,10 @@ enum SYMBOL { //новые типы которые мы придумали, их
 
 enum ERRORS{
     YES,
+    INCORECT_COOR = -1,
     NO_WIN_MOVE,
     WIN,
+    NEXT_MOVE,
     NOT_MY_MOVE,
     DRAW,
 

@@ -32,10 +32,10 @@ FIELD::~FIELD()
 
 int FIELD::OpportunityOfMove(int x, int y){
     if(x > w || y > h){
-        return -1;
+        return ERRORS::INCORECT_COOR;
     }
     if(field[x][y] != SYMBOL::no ){
-        return -1;
+        return ERRORS::INCORECT_COOR;
     }
     else{
         return 1;
@@ -77,26 +77,18 @@ void FIELD::ShowField(){
 int FIELD::CheakWinner()
 {
     if(CheakWinHorizontal() == true){
-    O_count = 0;
-    X_count = 0;
-    return 1;
+    return ERRORS::WIN;
     }
     if(CheakWinVertical() == true){
-    O_count = 0;
-    X_count = 0;
-    return 1;
+    return ERRORS::WIN;
     }
     if(CheakWinDiagLeft() == true){
-    O_count = 0;
-    X_count = 0;
-    return 1;
+    return ERRORS::WIN;
     }
     if(CheakWinDiagRight() == true){
-    O_count = 0;
-    X_count = 0;
-    return 1;
+    return ERRORS::WIN;
     }
-    return -1;
+    return ERRORS::NEXT_MOVE;
 }
 
 bool FIELD::CheakWinVertical()
@@ -111,10 +103,8 @@ bool FIELD::CheakWinVertical()
             }
 
             if(O_count == w){
-                cout<<"(0)-is winv"<< endl;
                 return true;
-            }else if(X_count == w){
-                cout<<"(X)-is winv"<< endl;
+            }else if(X_count == w){               
                 return true;
             }
         }
@@ -136,10 +126,8 @@ bool FIELD::CheakWinHorizontal()
             }
 
             if(O_count == w){
-                cout<<"(0)-is winh"<< endl;
                 return true;
             }else if(X_count == w){
-                cout<<"(X)-is winh"<< endl;
                 return true;
             }
         }
@@ -159,10 +147,8 @@ bool FIELD::CheakWinDiagLeft()
             X_count++;
         }
         if(O_count == w){
-            cout<<"(0)-is windl"<< endl;
             return true;
         }else if(X_count == w){
-            cout<<"(X)-is windl"<< endl;
             return true;
         }
     }
@@ -182,11 +168,9 @@ bool FIELD::CheakWinDiagRight()
                 X_count++;
             }
 
-            if(O_count == (1 + w)){
-                cout<<"(0)-is windr"<< endl;
+            if(O_count == (w + 1)){
                 return true;
-            }else if(X_count ==(1 + w)){
-                cout<<"(X)-is windr"<< endl;
+            }else if(X_count ==(w + 1)){
                 return true;
             }
         }
