@@ -50,7 +50,7 @@ bool PLAYER::SearchForAi(int type_search, char symb, int line, FIELD* current_fi
         std::cout<<"horizontal search ai";
 
           for(int j = 0; j < current_field->h; j++){
-              if(current_field->field[j][line] == symb){
+              if(current_field->Field[j][line] == symb){
                   count++;
            }
           }
@@ -66,7 +66,7 @@ bool PLAYER::SearchForAi(int type_search, char symb, int line, FIELD* current_fi
         std::cout<<" Verticsl ai";
 
            for(int j = 0; j < current_field->w; j++){
-               if(current_field->field[line][j] == symb){
+               if(current_field->Field[line][j] == symb){
                    count++;
                }
               }
@@ -102,42 +102,42 @@ std::pair<std::pair<int, int>, char> PLAYER::GetBetterMove(char symb, FIELD* cur
 void PLAYER::GetFirstMoveOnAngle(char symb, FIELD* current_field)
 {
     std::cout<<"First";
-    if(current_field->field[1][1] == SYMBOL::no){
+    if(current_field->Field[1][1] == SYMBOL::no){
         InformationFist.first.first = 1;
         InformationFist.first.second = 1;
         InformationFist.second.first = 1;
         InformationFist.second.second = symb;
 
     }
-    else if(current_field->field[0][0] == SYMBOL::no &&
-            current_field->field[1][1] != symb){
+    else if(current_field->Field[0][0] == SYMBOL::no &&
+            current_field->Field[1][1] != symb){
         InformationFist.first.first = 0;
         InformationFist.first.second = 0;
         InformationFist.second.first = 2;
         InformationFist.second.second = symb;
 
     }
-    else if(current_field->field[0][0] != symb &&
-            current_field->field[0][0] != SYMBOL::no &&
-            current_field->field[2][0] == SYMBOL::no){
+    else if(current_field->Field[0][0] != symb &&
+            current_field->Field[0][0] != SYMBOL::no &&
+            current_field->Field[2][0] == SYMBOL::no){
         InformationFist.first.first = 2;
         InformationFist.first.second = 0;
         InformationFist.second.first = 3;
         InformationFist.second.second = symb;
 
     }
-    else if(current_field->field[2][0] != symb &&
-            current_field->field[2][0] != SYMBOL::no &&
-            current_field->field[2][2] == SYMBOL::no){
+    else if(current_field->Field[2][0] != symb &&
+            current_field->Field[2][0] != SYMBOL::no &&
+            current_field->Field[2][2] == SYMBOL::no){
         InformationFist.first.first = 2;
         InformationFist.first.second = 2;
         InformationFist.second.first = 4;
         InformationFist.second.second = symb;
 
     }
-    else if(current_field->field[2][2] != symb &&
-             current_field->field[2][2] != SYMBOL::no &&
-             current_field->field[0][2] == SYMBOL::no){
+    else if(current_field->Field[2][2] != symb &&
+             current_field->Field[2][2] != SYMBOL::no &&
+             current_field->Field[0][2] == SYMBOL::no){
          InformationFist.first.first = 0;
          InformationFist.first.second = 2;
          InformationFist.second.first = 5;
@@ -160,7 +160,7 @@ std::pair<std::pair<int, int>, char> PLAYER::GetSecondMoveOnAngle(char symb, FIE
         GetFirstMoveOnAngle(symb, current_field);
     }
     else if(InformationFist.second.first == 2){
-        if(current_field->field[0][2] == SYMBOL::no){
+        if(current_field->Field[0][2] == SYMBOL::no){
             InformationSecond.first.first = 0;
             InformationSecond.first.second = 2;
             InformationSecond.second = symb;
@@ -174,7 +174,7 @@ std::pair<std::pair<int, int>, char> PLAYER::GetSecondMoveOnAngle(char symb, FIE
         }
     }
     else if(InformationFist.second.first == 3){
-        if(current_field->field[2][2] == SYMBOL::no){
+        if(current_field->Field[2][2] == SYMBOL::no){
             InformationSecond.first.first = 0;
             InformationSecond.first.second = 0;
             InformationSecond.second = symb;
@@ -188,7 +188,7 @@ std::pair<std::pair<int, int>, char> PLAYER::GetSecondMoveOnAngle(char symb, FIE
         }
     }
     else if(InformationFist.second.first == 4){
-        if(current_field->field[0][2] == SYMBOL::no){
+        if(current_field->Field[0][2] == SYMBOL::no){
             InformationSecond.first.first = 0;
             InformationSecond.first.second = 2;
             InformationSecond.second = symb;
@@ -202,7 +202,7 @@ std::pair<std::pair<int, int>, char> PLAYER::GetSecondMoveOnAngle(char symb, FIE
         }
     }
     else if(InformationFist.second.first == 5){
-        if(current_field->field[0][0] == SYMBOL::no){
+        if(current_field->Field[0][0] == SYMBOL::no){
             InformationSecond.first.first = 0;
             InformationSecond.first.second = 0;
             InformationSecond.second = symb;
@@ -227,7 +227,7 @@ std::pair<std::pair<int, int>, char> PLAYER::GetWinnerMove(char symb, FIELD* cur
     for(int i = 0; i < 3; i++){//исчем где из верт/столбов есть два знака
         if(SearchForAi(0, symb, i, current_field) == true){//проверяем наличие двух знаков в одном из столбцов
             for(int j = 0; j <= i; j++){//исчем свободное место на этом столбе
-                if(current_field->field[j][i] == SYMBOL::no){
+                if(current_field->Field[j][i] == SYMBOL::no){
                     InformationWM.first.first = i;
                     InformationWM.first.second = j;
                     InformationWM.second = symb;
@@ -240,7 +240,7 @@ std::pair<std::pair<int, int>, char> PLAYER::GetWinnerMove(char symb, FIELD* cur
     for(int i = 0; i < 3; i++){//исчем где из горизонтальных столбов есть два знака
         if(SearchForAi(1, symb, i, current_field) == true){//проверяем наличие двух знаков
             for(int j = 0; j <= i; j++){//ищем свободное место на этом столбе
-                if(current_field->field[i][j] != symb){
+                if(current_field->Field[i][j] != symb){
                     InformationWM.first.first = j;
                     InformationWM.first.second = i;
                     InformationWM.second = symb;

@@ -56,7 +56,7 @@ int GamePlay::MakeMovePlayer(FIELD *field, PLAYER *player, char *NamePlayer)
     while(player->MakeMovePL(coor_move.first, coor_move.second, player->type_player, field) != ERRORS::YES);
     field->ShowField();
 
-    if(field->CheakWinner() == ERRORS::WIN){
+    if(VadimArbitr->CheakWinner(field) == ERRORS::WIN){
         return ERRORS::WIN;
     }
     else{
@@ -69,7 +69,7 @@ int GamePlay::MakeMoveAI(FIELD *field, PLAYER *player, char *NamePlayer)
     player->MakeMovePL(1,1,player->type_player, field);
     field->ShowField();
 
-    if(field->CheakWinner() == ERRORS::WIN){
+    if(VadimArbitr->CheakWinner(field) == ERRORS::WIN){
         return ERRORS::WIN;
     }
     else {

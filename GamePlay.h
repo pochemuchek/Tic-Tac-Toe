@@ -1,5 +1,6 @@
 #include<global.h>
 #include "player.h"
+#include "arbitr.h"
 #include "field.h"
 #include <iostream>
 #ifndef GAMEPLAY_H
@@ -13,6 +14,7 @@ private:
     FIELD *field;
     PLAYER *first;
     PLAYER *second;
+    ARBITR *VadimArbitr;
     int  count_move = 0;
 
 public:

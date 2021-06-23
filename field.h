@@ -11,28 +11,24 @@ private :
    int **field;
    int w;
    int h;
-
-   bool CheakWinHorizontal();
-   bool CheakWinVertical();
-   bool CheakWinDiagLeft();
-   bool CheakWinDiagRight();
-
    friend class PLAYER;
 
 public:
 
     int MaxMov = w*h;
+    int width = w;
+    int hight = h;
     int count = 0;
+    int **Field = field; //copy for other functions outside this class (arbitr)
     FIELD();
     ~FIELD();
+
     int OpportunityOfMove(int x, int y);
     int MakeMoveF(int x, int y, char symb = SYMBOL::no);
 
     void ShowField();
     int CheakWinner();
 
-    int X_count = 0;
-    int O_count = 0;
 
 
 };
