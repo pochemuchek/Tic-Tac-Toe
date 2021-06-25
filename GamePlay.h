@@ -24,7 +24,7 @@ public:
     std::pair<int, int> GetMove(char *NamePlayer);
 
     int MakeMovePlayer (FIELD *field, PLAYER *player, char *NamePlayer);
-    int MakeMoveAI (FIELD *field, PLAYER *player, char *NamePlayer);
+    int MakeMoveAI (FIELD *field, PLAYER *player);
 
     void Game_Human_VS_Ai(FIELD *field, PLAYER *first, PLAYER *second);
     void Game_Human_VS_Human(FIELD *field, PLAYER *first, PLAYER *second);

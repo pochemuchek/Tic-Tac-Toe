@@ -11,13 +11,13 @@ FIELD::FIELD()
     h = 3;
     //заполняем все поля нулями
     // + инициализируем двумерный массив
-    Field = new int *[h];//выделяем новый столбик длинной h
+    field = new int *[h];//выделяем новый столбик длинной h
 
     //и в этом столбике у каждого элемента ссылка остается на строку от этого столба
     for(int i = 0; i < h; i++){
-        Field[i] = new int [w];
+        field[i] = new int [w];
         for (int j = 0; j < w; j++){
-            Field[i][j] = SYMBOL::no;
+            field[i][j] = SYMBOL::no;
         }
     }
 }
@@ -25,16 +25,16 @@ FIELD::FIELD()
 FIELD::~FIELD()
 {
     for(int i = 0; i < h ; i++){
-        delete [] Field[i];
+        delete [] field[i];
     }
-    delete [] Field;
+    delete [] field;
 }
 
 int FIELD::OpportunityOfMove(int x, int y){
     if(x > w || y > h){
         return ERRORS::INCORECT_COOR;
     }
-    if(Field[x][y] != SYMBOL::no ){
+    if(field[x][y] != SYMBOL::no ){
         return ERRORS::INCORECT_COOR;
     }
     else{
@@ -45,7 +45,7 @@ int FIELD::OpportunityOfMove(int x, int y){
 int FIELD::MakeMoveF(int x, int y, char symb)
 {
     if(FIELD::OpportunityOfMove(x,y) == 1){
-        Field[x][y] = symb;
+        field[x][y] = symb;
         count++;
         return ERRORS::YES;
     }
@@ -67,7 +67,7 @@ void FIELD::ShowField(){
     for (int y = 0; y < h; y++) {
         cout << y << "|";
         for (int x = 0; x < w; x++) {
-            cout << (char)Field[x][y] << "|";
+            cout << (char)field[x][y] << "|";
         }
         cout << endl;
     }

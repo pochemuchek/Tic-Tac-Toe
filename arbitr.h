@@ -17,7 +17,7 @@ public:
     bool CheakWinDiagRight(FIELD *Field);
     int CheakWinner(FIELD *Field);
 
-    int WinnerCount;
+    int WinnerCount = 0;
     int TypeGame;
 };
 

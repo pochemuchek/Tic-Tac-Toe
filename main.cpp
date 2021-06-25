@@ -8,12 +8,15 @@ using namespace std;
 
 int main()
 {
-    ARBITR *Vadim;
+    ARBITR *Vadim = new ARBITR();
     if(Vadim->InitGame() == 1){
         GamePlay(TYPE_PLAYER::human, TYPE_PLAYER::human);
     }
-    else{
+    else if(Vadim->InitGame() == 2){
         GamePlay(TYPE_PLAYER::human, TYPE_PLAYER::AI);
     }
+    delete Vadim;
+
+        //GamePlay(TYPE_PLAYER::human, TYPE_PLAYER::human);
     return 1;
 }

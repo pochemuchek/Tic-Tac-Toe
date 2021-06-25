@@ -1,8 +1,9 @@
+
 #include "arbitr.h"
 
 ARBITR::ARBITR()
 {
-    WinnerCount = 0;
+    TypeGame = 0;
 }
 int ARBITR::CheakWinner(FIELD *Field)
 {
@@ -23,6 +24,7 @@ int ARBITR::CheakWinner(FIELD *Field)
 
 bool ARBITR::CheakWinVertical(FIELD *Field)
 {
+    WinnerCount = 0;
     for(int i = 0; i < Field->hight; i++){
         for(int j = 0; j < Field->width; j++){
             if( Field->Field[i][j]== SYMBOL::tac && Field->Field[i][j] != SYMBOL::no){
@@ -42,6 +44,7 @@ bool ARBITR::CheakWinVertical(FIELD *Field)
 
 bool ARBITR::CheakWinHorizontal(FIELD *Field)
 {
+    WinnerCount = 0;
     for(int i = 0; i < Field->hight; i++){
         for(int j = 0; j < Field->width; j++){
             if(Field->Field[j][i] == SYMBOL::tac && Field->Field[j][i] != SYMBOL::no){
@@ -61,6 +64,7 @@ bool ARBITR::CheakWinHorizontal(FIELD *Field)
 
 bool ARBITR::CheakWinDiagLeft(FIELD *Field)
 {
+    WinnerCount = 0;
     for(int i = 0; i < Field->width; i++){
         if(Field->Field[i][i] == SYMBOL::tac && Field->Field[i][i] != SYMBOL::no){
             WinnerCount++;
@@ -77,6 +81,7 @@ bool ARBITR::CheakWinDiagLeft(FIELD *Field)
 
 bool ARBITR::CheakWinDiagRight(FIELD *Field)
 {
+    WinnerCount = 0;
     for(int i = Field->hight - 1; i >= 0; i--){
         for(int j = 0; j < Field->hight ; j++){
             if(Field->Field[i][j] == SYMBOL::tac && Field->Field[i][j] != SYMBOL::no){
@@ -93,12 +98,11 @@ bool ARBITR::CheakWinDiagRight(FIELD *Field)
 
 int ARBITR::InitGame()
 {
-    int y;
     do{
     cout << "Choose type game" << endl << "write (1) Human VS Human game"
     << endl << "Write (2) Human VS Artificial intellect game" << endl;;
     cin >> TypeGame;
-    cin >> y;
-    }while(TypeGame == 1 || TypeGame == 2);
+    }while(TypeGame == 0);
+
     return TypeGame;
 }

@@ -1,5 +1,4 @@
 #include "GamePlay.h"
-
 GamePlay::GamePlay(int TypeFirstPl, int TypeSecondPl)
 {
     FIELD *field_TicTacToe = new FIELD();
@@ -55,7 +54,6 @@ int GamePlay::MakeMovePlayer(FIELD *field, PLAYER *player, char *NamePlayer)
     }
     while(player->MakeMovePL(coor_move.first, coor_move.second, player->type_player, field) != ERRORS::YES);
     field->ShowField();
-
     if(VadimArbitr->CheakWinner(field) == ERRORS::WIN){
         return ERRORS::WIN;
     }
@@ -64,7 +62,7 @@ int GamePlay::MakeMovePlayer(FIELD *field, PLAYER *player, char *NamePlayer)
     }
 }
 
-int GamePlay::MakeMoveAI(FIELD *field, PLAYER *player, char *NamePlayer)
+int GamePlay::MakeMoveAI(FIELD *field, PLAYER *player)
 {
     player->MakeMovePL(1,1,player->type_player, field);
     field->ShowField();
@@ -84,7 +82,7 @@ void GamePlay::Game_Human_VS_Ai(FIELD *field, PLAYER *first, PLAYER *second)
             cout<< "player win" << endl;
             break;
         }
-        if(MakeMoveAI(field, second, "second player") == ERRORS::WIN){
+        if(MakeMoveAI(field, second) == ERRORS::WIN){
             cout<< "AI win" << endl;
             break;
         }
