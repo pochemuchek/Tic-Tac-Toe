@@ -5,20 +5,19 @@
 class ARBITR
 {
 private:
-    class FIELD *Field;
+    int WinnerCount;
+    int TypeGame;
 
 public:
     ARBITR();
     int InitGame();
 
-    bool CheakWinHorizontal(FIELD *Field);
+    bool CheckWinHorizontal(FIELD *Field);
     bool CheakWinVertical(FIELD *Field);
     bool CheakWinDiagLeft(FIELD *Field);
     bool CheakWinDiagRight(FIELD *Field);
-    int CheakWinner(FIELD *Field);
+    int CheckWinner(FIELD *Field);
 
-    int WinnerCount = 0;
-    int TypeGame;
 };
 
 #endif // ARBITR_H

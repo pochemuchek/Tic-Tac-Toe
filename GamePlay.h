@@ -10,24 +10,24 @@
 class GamePlay
 {
 private:
+    ARBITR* VadimArbitr;
 
-    FIELD *field;
+    FIELD *field_TicTacToe;
     PLAYER *first;
     PLAYER *second;
-    ARBITR *VadimArbitr;
     int  count_move = 0;
 
 public:
-    GamePlay(int TypeFirstPl, int TypeSecondPl);
+    GamePlay(int TypeFirstPl, int TypeSecondPl, ARBITR*);
     ~GamePlay();
 
     std::pair<int, int> GetMove(char *NamePlayer);
 
-    int MakeMovePlayer (FIELD *field, PLAYER *player, char *NamePlayer);
-    int MakeMoveAI (FIELD *field, PLAYER *player);
+    int MakeMovePlayer (PLAYER *player, char *NamePlayer);
+    int MakeMoveAI (PLAYER *player);
 
-    void Game_Human_VS_Ai(FIELD *field, PLAYER *first, PLAYER *second);
-    void Game_Human_VS_Human(FIELD *field, PLAYER *first, PLAYER *second);
+    void Game_Human_VS_Ai(PLAYER *first, PLAYER *second);
+    void Game_Human_VS_Human(PLAYER *first, PLAYER *second);
 };
 
 #endif // GAMEPLAY_H
