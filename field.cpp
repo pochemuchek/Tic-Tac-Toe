@@ -12,7 +12,6 @@ FIELD::FIELD()
     //заполняем все поля нулями
     // + инициализируем двумерный массив
     field = new int *[h];//выделяем новый столбик длинной h
-
     //и в этом столбике у каждого элемента ссылка остается на строку от этого столба
     for(int i = 0; i < h; i++){
         field[i] = new int [w];
@@ -37,9 +36,8 @@ int FIELD::OpportunityOfMove(int x, int y){
     if(field[x][y] != SYMBOL::no ){
         return ERRORS::INCORECT_COOR;
     }
-    else{
-        return 1;
-    }
+
+    return 1;   //ERRORS::YES;
 }
 
 int FIELD::MakeMoveF(int x, int y, char symb)
@@ -49,10 +47,8 @@ int FIELD::MakeMoveF(int x, int y, char symb)
         count++;
         return ERRORS::YES;
     }
-    else{
-         return -1;
-    }
-    return -1;
+
+    return -1;  //errors::INCORECT_COOR
 }
 
 

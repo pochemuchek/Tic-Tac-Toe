@@ -3,21 +3,22 @@
 
 ARBITR::ARBITR()
 {
+    WinnerCount = 0;
     TypeGame = 0;
 }
-int ARBITR::CheakWinner(FIELD *Field)
+int ARBITR::CheckWinner(FIELD *Field)
 {
-    if(CheakWinHorizontal(Field) == true){
-    return ERRORS::WIN;
+    if(CheckWinHorizontal(Field) == true){
+        return ERRORS::WIN;
     }
     if(CheakWinVertical(Field) == true){
-    return ERRORS::WIN;
+        return ERRORS::WIN;
     }
     if(CheakWinDiagLeft(Field) == true){
-    return ERRORS::WIN;
+        return ERRORS::WIN;
     }
     if(CheakWinDiagRight(Field) == true){
-    return ERRORS::WIN;
+        return ERRORS::WIN;
     }
     return ERRORS::NEXT_MOVE;
 }
@@ -42,9 +43,10 @@ bool ARBITR::CheakWinVertical(FIELD *Field)
     return false;
 }
 
-bool ARBITR::CheakWinHorizontal(FIELD *Field)
+bool ARBITR::CheckWinHorizontal(FIELD *Field)
 {
     WinnerCount = 0;
+
     for(int i = 0; i < Field->hight; i++){
         for(int j = 0; j < Field->width; j++){
             if(Field->Field[j][i] == SYMBOL::tac && Field->Field[j][i] != SYMBOL::no){
@@ -56,8 +58,8 @@ bool ARBITR::CheakWinHorizontal(FIELD *Field)
 
             if(WinnerCount == Field->width){
                 return true;
+            }
         }
-    }
     }
     return false;
 }
