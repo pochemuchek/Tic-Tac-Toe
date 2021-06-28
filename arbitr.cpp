@@ -94,7 +94,9 @@ bool ARBITR::CheakWinDiagLeft(FIELD *Field)
 
 bool ARBITR::CheakWinDiagRight(FIELD *Field)
 {
-    for(int i = (Field->hight - 1), j = 0; j < Field->hight, i >= 0; i--, j++){//!!!!!!!!!!!
+    int i = (Field->hight - 1);
+    int j = 0;
+    while(j < 3 && i >= 0){
             if(Field->Field[i][j] != SYMBOL::tic && Field->Field[i][j] == SYMBOL::tac &&
                Field->Field[i][j] == SYMBOL::no){
                 Count_0++;
@@ -102,10 +104,9 @@ bool ARBITR::CheakWinDiagRight(FIELD *Field)
             else if(Field->Field[i][j] == SYMBOL::tic && Field->Field[i][j] != SYMBOL::no &&
                     Field->Field[i][j] != SYMBOL::tac){
                 Count_X++;
-            }else{
-                break;
             }
-
+            j++;
+            i--;
         }
         if(Count_X == 3 || Count_0 == 3){
             Count_0 = 0;
