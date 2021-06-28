@@ -15,9 +15,11 @@ private:
     FIELD *field_TicTacToe;
     PLAYER *first;
     PLAYER *second;
-    int  count_move = 0;
+    int  count_move;
 
 public:
+    void StartGame(int TypeGame);
+
     GamePlay(int TypeFirstPl, int TypeSecondPl, ARBITR*);
     ~GamePlay();
 

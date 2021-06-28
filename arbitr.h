@@ -5,8 +5,9 @@
 class ARBITR
 {
 private:
-    int WinnerCount;
     int TypeGame;
+    int Count_X;
+    int Count_0;
 
 public:
     ARBITR();

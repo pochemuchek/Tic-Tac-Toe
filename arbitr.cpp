@@ -3,7 +3,8 @@
 
 ARBITR::ARBITR()
 {
-    WinnerCount = 0;
+    Count_0 = 0;
+    Count_X = 0;
     TypeGame = 0;
 }
 int ARBITR::CheckWinner(FIELD *Field)
@@ -25,76 +26,94 @@ int ARBITR::CheckWinner(FIELD *Field)
 
 bool ARBITR::CheakWinVertical(FIELD *Field)
 {
-    WinnerCount = 0;
     for(int i = 0; i < Field->hight; i++){
         for(int j = 0; j < Field->width; j++){
-            if( Field->Field[i][j]== SYMBOL::tac && Field->Field[i][j] != SYMBOL::no){
-                WinnerCount++;
+            if( Field->Field[i][j] == SYMBOL::tac && Field->Field[i][j] != SYMBOL::no){
+                Count_0++;
             }
             else if(Field->Field[i][j] == SYMBOL::tic && Field->Field[i][j] != SYMBOL::no){
-                WinnerCount++;
-            }
-
-            if(WinnerCount == Field->hight){
-                return true;
+                Count_X++;
             }
         }
+        if(Count_X == Field->hight || Count_0 == Field->hight){
+            cout<<"v";
+            return true;
+        }
+        Count_0 = 0;
+        Count_X = 0;
     }
+    Count_0 = 0;
+    Count_X = 0;
     return false;
 }
 
 bool ARBITR::CheckWinHorizontal(FIELD *Field)
 {
-    WinnerCount = 0;
-
     for(int i = 0; i < Field->hight; i++){
         for(int j = 0; j < Field->width; j++){
+
             if(Field->Field[j][i] == SYMBOL::tac && Field->Field[j][i] != SYMBOL::no){
-                WinnerCount++;
+                Count_0++;
             }
             else if(Field->Field[j][i] == SYMBOL::tic && Field->Field[j][i] != SYMBOL::no){
-                WinnerCount++;
-            }
-
-            if(WinnerCount == Field->width){
-                return true;
+                Count_X++;
             }
         }
+        if(Count_X == Field->width || Count_0 == Field->width){
+            cout<<"h";
+            return true;
+        }
+        Count_0 = 0;
+        Count_X = 0;
     }
+    Count_0 = 0;
+    Count_X = 0;
     return false;
 }
 
 bool ARBITR::CheakWinDiagLeft(FIELD *Field)
 {
-    WinnerCount = 0;
     for(int i = 0; i < Field->width; i++){
         if(Field->Field[i][i] == SYMBOL::tac && Field->Field[i][i] != SYMBOL::no){
-            WinnerCount++;
+            Count_0++;
         }
         else if(Field->Field[i][i] == SYMBOL::tic && Field->Field[i][i] != SYMBOL::no){
-            WinnerCount++;
+            Count_X++;
         }
-        if(WinnerCount == Field->width || WinnerCount == Field->hight){
+        if(Count_X == Field->width || Count_0 == Field->hight){
+            cout<<"dl";
+            Count_0 = 0;
+            Count_X = 0;
             return true;
         }
     }
+    Count_0 = 0;
+    Count_X = 0;
     return false;
 }
 
 bool ARBITR::CheakWinDiagRight(FIELD *Field)
 {
-    WinnerCount = 0;
-    for(int i = Field->hight - 1; i >= 0; i--){
-        for(int j = 0; j < Field->hight ; j++){
-            if(Field->Field[i][j] == SYMBOL::tac && Field->Field[i][j] != SYMBOL::no){
-                WinnerCount++;
+    for(int i = (Field->hight - 1), j = 0; j < Field->hight, i >= 0; i--, j++){//!!!!!!!!!!!
+            if(Field->Field[i][j] != SYMBOL::tic && Field->Field[i][j] == SYMBOL::tac &&
+               Field->Field[i][j] == SYMBOL::no){
+                Count_0++;
             }
-            else if(Field->Field[i][j] == SYMBOL::tic && Field->Field[i][j] != SYMBOL::no){
-                WinnerCount++;
+            else if(Field->Field[i][j] == SYMBOL::tic && Field->Field[i][j] != SYMBOL::no &&
+                    Field->Field[i][j] != SYMBOL::tac){
+                Count_X++;
+            }else{
+                break;
             }
 
         }
-    }
+        if(Count_X == 3 || Count_0 == 3){
+            Count_0 = 0;
+            Count_X = 0;
+            return true;
+        }
+    Count_0 = 0;
+    Count_X = 0;
     return false;
 }
 

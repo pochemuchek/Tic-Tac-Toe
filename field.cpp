@@ -9,6 +9,8 @@ FIELD::FIELD()
 {
     w = 3;
     h = 3;
+    width = 3;
+    hight = 3;
     //заполняем все поля нулями
     // + инициализируем двумерный массив
     field = new int *[h];//выделяем новый столбик длинной h
@@ -19,6 +21,7 @@ FIELD::FIELD()
             field[i][j] = SYMBOL::no;
         }
     }
+    Field = field;
 }
 
 FIELD::~FIELD()
@@ -30,25 +33,24 @@ FIELD::~FIELD()
 }
 
 int FIELD::OpportunityOfMove(int x, int y){
-    if(x > w || y > h){
+    if(x >= w || y >= h){
         return ERRORS::INCORECT_COOR;
     }
     if(field[x][y] != SYMBOL::no ){
         return ERRORS::INCORECT_COOR;
     }
 
-    return 1;   //ERRORS::YES;
+    return ERRORS::YES;
 }
 
 int FIELD::MakeMoveF(int x, int y, char symb)
 {
-    if(FIELD::OpportunityOfMove(x,y) == 1){
+    if(FIELD::OpportunityOfMove(x,y) == ERRORS::YES){
         field[x][y] = symb;
-        count++;
         return ERRORS::YES;
     }
 
-    return -1;  //errors::INCORECT_COOR
+    return ERRORS::INCORECT_COOR;
 }
 
 

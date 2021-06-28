@@ -15,11 +15,10 @@ private :
 
 public:
 
-    int MaxMov = w*h;
-    int width = w;
-    int hight = h;
-    int count = 0;
-    int **Field = field; //copy for other functions outside this class (arbitr)
+    //int MaxMov = w * h ;
+    int width;
+    int hight;
+    int **Field; //copy for other functions outside this class (arbitr)
     FIELD();
     ~FIELD();
 

@@ -7,28 +7,17 @@
 #include <iostream>
 using namespace std;
 
-class TEMP {
-public :
-//    static int a;
-    int b;
-};
-//int TEMP::a = 0;
-
-void foo(TEMP* a) {
-    std::cout << a->b;
-    a->b = 100;
-}
-
 
 int main()
 {
     ARBITR *Vadim = new ARBITR();
 
     GamePlay* game = new GamePlay(TYPE_PLAYER::human, TYPE_PLAYER::human, Vadim);
-
+    game->StartGame(TYPE_GAME::HUMAN_VS_HUMAN);
 
     delete game;
     delete Vadim;
+
     return 0;
 
 //    if(Vadim->InitGame() == 1)

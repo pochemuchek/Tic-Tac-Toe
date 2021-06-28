@@ -10,7 +10,7 @@ enum SYMBOL { //новые типы которые мы придумали, их
 
 enum ERRORS{
     YES,
-    INCORECT_COOR = -1,
+    INCORECT_COOR,
     NO_WIN_MOVE,
     WIN,
     NEXT_MOVE,
@@ -24,4 +24,10 @@ enum TYPE_PLAYER {
     human = 1,
     AI = 2,
 };
+
+enum TYPE_GAME{
+    HUMAN_VS_HUMAN = 1,
+    HUMAN_VS_AI = 2,
+};
+
 #endif // GLOBAL_H

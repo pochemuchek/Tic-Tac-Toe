@@ -1,8 +1,11 @@
 #include "GamePlay.h"
 GamePlay::GamePlay(int TypeFirstPl, int TypeSecondPl, ARBITR* arb)
 {
+    count_move = 0;
     VadimArbitr = arb;
     field_TicTacToe = new FIELD();
+
+
     if(TypeFirstPl == TYPE_PLAYER::human && TypeSecondPl == TYPE_PLAYER::human){//human VS human
         first = new PLAYER(field_TicTacToe,
                                    TYPE_PLAYER::human,
@@ -11,8 +14,6 @@ GamePlay::GamePlay(int TypeFirstPl, int TypeSecondPl, ARBITR* arb)
         second = new PLAYER(field_TicTacToe,
                                    TYPE_PLAYER::human,
                                    SYMBOL::tac);
-        field_TicTacToe->ShowField();
-        Game_Human_VS_Human(first, second);
     }
     else if(TypeFirstPl == TYPE_PLAYER::AI || TypeSecondPl == TYPE_PLAYER::AI){//human VS AI
         first = new PLAYER(field_TicTacToe,
@@ -22,8 +23,6 @@ GamePlay::GamePlay(int TypeFirstPl, int TypeSecondPl, ARBITR* arb)
         second = new PLAYER(field_TicTacToe,
                                    TYPE_PLAYER::AI,
                                    SYMBOL::tac);
-        field_TicTacToe->ShowField();
-//        Game_Human_VS_Ai(field_TicTacToe, first, second);
     }
 }
 
@@ -31,6 +30,18 @@ GamePlay::~GamePlay(){
     delete first;
     delete second;
     delete field_TicTacToe;
+}
+
+void GamePlay::StartGame(int TypeGame)
+{
+    if(TypeGame == TYPE_GAME::HUMAN_VS_HUMAN){
+        field_TicTacToe->ShowField();
+        Game_Human_VS_Human(first, second);
+    }
+    else if(TypeGame == TYPE_GAME::HUMAN_VS_AI){
+        field_TicTacToe->ShowField();
+        Game_Human_VS_Ai(first, second);
+    }
 }
 
 std::pair<int,int> GamePlay::GetMove(char *NamePlayer){
