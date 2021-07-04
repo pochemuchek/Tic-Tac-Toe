@@ -60,7 +60,6 @@ bool ARBITR::CheckWinHorizontal(FIELD *Field)
             }
         }
         if(Count_X == Field->width || Count_0 == Field->width){
-            cout<<"h";
             return true;
         }
         Count_0 = 0;
@@ -81,7 +80,6 @@ bool ARBITR::CheakWinDiagLeft(FIELD *Field)
             Count_X++;
         }
         if(Count_X == Field->width || Count_0 == Field->hight){
-            cout<<"dl";
             Count_0 = 0;
             Count_X = 0;
             return true;
@@ -94,7 +92,7 @@ bool ARBITR::CheakWinDiagLeft(FIELD *Field)
 
 bool ARBITR::CheakWinDiagRight(FIELD *Field)
 {
-    int i = (Field->hight - 1);
+    int i = 2;
     int j = 0;
     while(j < 3 && i >= 0){
             if(Field->Field[i][j] != SYMBOL::tic && Field->Field[i][j] == SYMBOL::tac &&
@@ -120,11 +118,9 @@ bool ARBITR::CheakWinDiagRight(FIELD *Field)
 
 int ARBITR::InitGame()
 {
-    do{
     cout << "Choose type game" << endl << "write (1) Human VS Human game"
-    << endl << "Write (2) Human VS Artificial intellect game" << endl;;
+    << endl << "Write (2) Human VS Artificial intellect game" << endl;
     cin >> TypeGame;
-    }while(TypeGame == 0);
 
     return TypeGame;
 }

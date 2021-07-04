@@ -14,11 +14,16 @@ private:
 
     char symbol;
     class FIELD *current_field;
+
     std::pair<std::pair<int, int >, char> GetInfo(int FirstFirst, int FirstSecond, int Second);
-    std::pair<std::pair<int, int >, char> GetWinnerMove(char symb, FIELD* field);
-    std::pair<std::pair<int, int >, char> GetBetterMove(char symb, FIELD* field);
-    void GetFirstMoveOnAngle(char symb, FIELD* field);
+    std::pair<std::pair<int, int >, char> GetBetterMove(char symb);
+
+    int GetFirstMoveOnAngle(char symb, FIELD* field);
     std::pair<std::pair<int, int >, char> GetSecondMoveOnAngle(char symb, FIELD* field);
+    std::pair<std::pair<int, int >, char> PreventWin(char symb);
+    std::pair<std::pair<int, int >, char> GetWinnerMove(char symb, FIELD* field);
+    std::pair<int, int> SearchWinnerMoveForLine(FIELD* field, int line, int search);
+    std::pair<int, int > SearchWinnerMoveForDiag(FIELD* field, char symb, int search);
 
     int move = 0;
 public:
@@ -31,7 +36,7 @@ public:
     int type_player;
     int count = 0;
     int count_move = 0;
-    std::pair<std::pair<int, int>,std::pair<int, char>> InformationFist;
+    std::pair<std::pair<int, int >, char> InformationFist;
 
 
 };

@@ -11,24 +11,22 @@ using namespace std;
 int main()
 {
     ARBITR *Vadim = new ARBITR();
+    GamePlay* game;
+    int Point = Vadim->InitGame();
 
-    GamePlay* game = new GamePlay(TYPE_PLAYER::human, TYPE_PLAYER::human, Vadim);
-    game->StartGame(TYPE_GAME::HUMAN_VS_HUMAN);
+    if(Point == 1)
+    {
+         game = new GamePlay(TYPE_PLAYER::human, TYPE_PLAYER::human, Vadim);
+         game->StartGame(TYPE_GAME::HUMAN_VS_HUMAN);
+    }
+    else if(Point == 2){
+         game = new GamePlay(TYPE_PLAYER::human, TYPE_PLAYER::AI, Vadim);
+         game->StartGame(TYPE_GAME::HUMAN_VS_AI);
+    }
+
 
     delete game;
     delete Vadim;
-
-    return 0;
-
-//    if(Vadim->InitGame() == 1)
-//    {
-//        GamePlay(TYPE_PLAYER::human, TYPE_PLAYER::human);
-//    }
-//    else if(Vadim->InitGame() == 2){
-//        GamePlay(TYPE_PLAYER::human, TYPE_PLAYER::AI);
-//    }
-
-//    delete Vadim;
 
         //GamePlay(TYPE_PLAYER::human, TYPE_PLAYER::human);
     return 0;

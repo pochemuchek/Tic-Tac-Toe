@@ -74,7 +74,7 @@ int GamePlay::MakeMovePlayer(PLAYER *player, char *NamePlayer)
 
 int GamePlay::MakeMoveAI(PLAYER *player)
 {
-    player->MakeMovePL(1,1,player->type_player, field_TicTacToe);
+    player->MakeMovePL(1, 1, player->type_player, field_TicTacToe);
     field_TicTacToe->ShowField();
 
     if(VadimArbitr->CheckWinner(field_TicTacToe) == ERRORS::WIN){
@@ -86,6 +86,7 @@ int GamePlay::MakeMoveAI(PLAYER *player)
 
 void GamePlay::Game_Human_VS_Ai(PLAYER *first, PLAYER *second)
 {
+    count_move = 0;
     do{
         if(MakeMovePlayer(first, "player") == ERRORS::WIN){
             cout<< "player win" << endl;
@@ -98,9 +99,11 @@ void GamePlay::Game_Human_VS_Ai(PLAYER *first, PLAYER *second)
 
         count_move +=2;
     }while(count_move < 9);
+    cout << "game end"<<endl;
 }
 
-void GamePlay::Game_Human_VS_Human(PLAYER *first, PLAYER *second){
+void GamePlay::Game_Human_VS_Human(PLAYER *first, PLAYER *second)
+{
     count_move = 0;
     do{
         if(MakeMovePlayer(first, "first player") == ERRORS::WIN){
