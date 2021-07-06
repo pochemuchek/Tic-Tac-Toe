@@ -55,25 +55,47 @@ std::pair<int,int> GamePlay::GetMove(char *NamePlayer){
     return pair;
 }
 
+//OpportunityOfMove -- вызывается два раза!!!
 int GamePlay::MakeMovePlayer(PLAYER *player, char *NamePlayer)
 {
+    if (field_TicTacToe->getCount_move() == 9) {
+        return ERRORS::NOT_POSSIBLE_MOVE;
+    }
+
     std::pair<int, int> coor_move;
-    do{
-        do{
-           coor_move = GetMove(NamePlayer);
+    int error = ERRORS::YES;
+    do {
+        if (error == ERRORS::NOT_POSSIBLE_MOVE) {
+            return ERRORS::NEXT_MOVE;
         }
-        while(field_TicTacToe->OpportunityOfMove(coor_move.first, coor_move.second) == ERRORS::INCORECT_COOR);
-    }
-    while(player->MakeMovePL(coor_move.first, coor_move.second, player->type_player, field_TicTacToe) != ERRORS::YES);
+        coor_move = GetMove(NamePlayer);
+        error = player->MakeMovePL(coor_move.first, coor_move.second, player->type_player, field_TicTacToe);
+    }while (error != ERRORS::YES);
+
     field_TicTacToe->ShowField();
-    if(VadimArbitr->CheckWinner(field_TicTacToe) == ERRORS::WIN){
-        return ERRORS::WIN;
-    }
-    return ERRORS::NEXT_MOVE;
+
+    return VadimArbitr->CheckWinner(field_TicTacToe);
 }
 
+//1. делается ход
+//2. проверка на победу
+//3. человек в голове принимает решение о ходе
+//      3.0. сделать такой ход, чтобы выиграть
+//      3.1. сделать такой ход, чтобы не проиграть
+//      3.2. сделать любой ход (чтобы не проиграть) (есть ходы плохие есть ходы хорошие) (1,1) (0,0), (0,2), (2,2) (2,0)
+        using prior_move = QPair<int /*priority*/, QPair<int /*X*/,int /*Y*/>>;
+        QVector<QPair<int /*priority*/, QPair<int /*X*/,int /*Y*/>>> best_move_vector;
+        QVector<prior_move> best_move_vector_prior;
+//    best_move = {{0, {1,1}}, {1, {0,2}}, {1, {2,0}}, {1, {0,0}}, {1, {2,2}}};
+        QMap<int /*priority*/, QPair<int /*X*/,int /*Y*/>> best_move_map;
+//    best_move = {{0, {1,1}}, {1, {0,2}}, {1, {2,0}}, {1, {0,0}}, {1, {2,2}}};
+
+
+//4. компьютер принимает решение
 int GamePlay::MakeMoveAI(PLAYER *player)
 {
+
+
     player->MakeMovePL(1, 1, player->type_player, field_TicTacToe);
     field_TicTacToe->ShowField();
 
@@ -98,7 +120,7 @@ void GamePlay::Game_Human_VS_Ai(PLAYER *first, PLAYER *second)
         }
 
         count_move +=2;
-    }while(count_move < 9);
+    }while(count_move <= 8);
     cout << "game end"<<endl;
 }
 
@@ -116,7 +138,7 @@ void GamePlay::Game_Human_VS_Human(PLAYER *first, PLAYER *second)
         }
 
         count_move +=2;
-    }while(count_move < 9);
+    }while(count_move <= 8);
     cout << "game end"<<endl;
 }
 

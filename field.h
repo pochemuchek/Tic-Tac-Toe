@@ -1,5 +1,7 @@
 #ifndef FIELD_H
 #define FIELD_H
+
+#include <assert.h>
 #include "global.h"
 #include "player.h"
 #include <iostream>
@@ -12,6 +14,7 @@ private :
    int w;
    int h;
    friend class PLAYER;
+   int count_move;
 
 public:
 
@@ -30,6 +33,7 @@ public:
 
 
 
+    int getCount_move() const;
 };
 
 #endif // FIELD_H

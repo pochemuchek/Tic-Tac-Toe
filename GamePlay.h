@@ -3,6 +3,10 @@
 #include "arbitr.h"
 #include "field.h"
 #include <iostream>
+
+#include <QMap>
+#include <QPair>
+
 #ifndef GAMEPLAY_H
 #define GAMEPLAY_H
 

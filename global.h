@@ -16,6 +16,7 @@ enum ERRORS{
     NEXT_MOVE,
     NOT_MY_MOVE,
     DRAW,
+    NOT_POSSIBLE_MOVE,
 
 };
 

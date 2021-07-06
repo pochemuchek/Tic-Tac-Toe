@@ -5,6 +5,11 @@
 
 using namespace std;
 
+int FIELD::getCount_move() const
+{
+    return count_move;
+}
+
 FIELD::FIELD()
 {
     w = 3;
@@ -22,6 +27,7 @@ FIELD::FIELD()
         }
     }
     Field = field;
+    count_move = 0;
 }
 
 FIELD::~FIELD()
@@ -33,24 +39,32 @@ FIELD::~FIELD()
 }
 
 int FIELD::OpportunityOfMove(int x, int y){
-    if(x >= w || y >= h){
-        return ERRORS::INCORECT_COOR;
+    int error = ERRORS::YES;
+    if (count_move > 8) {
+        error = ERRORS::NOT_POSSIBLE_MOVE;
     }
-    if(field[x][y] != SYMBOL::no ){
-        return ERRORS::INCORECT_COOR;
+    else if(x >= w || y >= h){
+        error = ERRORS::INCORECT_COOR;
     }
 
-    return ERRORS::YES;
+    else if(field[x][y] != SYMBOL::no ){
+        error = ERRORS::INCORECT_COOR;
+    }
+
+    count_move++;
+    return error;
 }
+
+
 
 int FIELD::MakeMoveF(int x, int y, char symb)
 {
-    if(FIELD::OpportunityOfMove(x,y) == ERRORS::YES){
+    int error = OpportunityOfMove(x,y);
+    if(error == ERRORS::YES){
         field[x][y] = symb;
-        return ERRORS::YES;
     }
 
-    return ERRORS::INCORECT_COOR;
+    return error;
 }
 
 
