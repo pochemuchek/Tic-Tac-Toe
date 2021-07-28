@@ -57,19 +57,21 @@ std::pair<int,int> GamePlay::GetMove(char *NamePlayer){
 
 int GamePlay::MakeMovePlayer(PLAYER *player, char *NamePlayer)
 {
+    if (field_TicTacToe->getCount_move() == 9) {
+        return ERRORS::NOT_POSSIBLE_MOVE;
+    }
     std::pair<int, int> coor_move;
-    do{
-        do{
-           coor_move = GetMove(NamePlayer);
+    int error = ERRORS::YES;
+    do {
+        if (error == ERRORS::NOT_POSSIBLE_MOVE) {
+            return ERRORS::NEXT_MOVE;
         }
-        while(field_TicTacToe->OpportunityOfMove(coor_move.first, coor_move.second) == ERRORS::INCORECT_COOR);
-    }
-    while(player->MakeMovePL(coor_move.first, coor_move.second, player->type_player, field_TicTacToe) != ERRORS::YES);
+        coor_move = GetMove(NamePlayer);
+        error = player->MakeMovePL(coor_move.first, coor_move.second, player->type_player, field_TicTacToe);
+    }while (error != ERRORS::YES);
     field_TicTacToe->ShowField();
-    if(VadimArbitr->CheckWinner(field_TicTacToe) == ERRORS::WIN){
-        return ERRORS::WIN;
-    }
-    return ERRORS::NEXT_MOVE;
+    return VadimArbitr->CheckWinner(field_TicTacToe);
+
 }
 
 int GamePlay::MakeMoveAI(PLAYER *player)
@@ -98,8 +100,7 @@ void GamePlay::Game_Human_VS_Ai(PLAYER *first, PLAYER *second)
         }
 
         count_move +=2;
-    }while(count_move < 9);
-    cout << "game end"<<endl;
+    }while(count_move <= 8);
 }
 
 void GamePlay::Game_Human_VS_Human(PLAYER *first, PLAYER *second)
@@ -116,7 +117,15 @@ void GamePlay::Game_Human_VS_Human(PLAYER *first, PLAYER *second)
         }
 
         count_move +=2;
-    }while(count_move < 9);
+    }while(count_move <= 8);
+}
+
+int GamePlay::EndGame()
+{
+   int restart = 0;
     cout << "game end"<<endl;
+    cout << "Pres '1' to Restart game"<<endl;
+    cin >> restart;
+    return restart;
 }
 

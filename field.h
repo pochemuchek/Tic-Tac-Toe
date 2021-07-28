@@ -11,11 +11,12 @@ private :
    int **field;
    int w;
    int h;
+   int count_move;
    friend class PLAYER;
 
 public:
-
     //int MaxMov = w * h ;
+    int getCount_move();
     int width;
     int hight;
     int **Field; //copy for other functions outside this class (arbitr)

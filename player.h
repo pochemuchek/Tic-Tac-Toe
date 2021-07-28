@@ -19,7 +19,12 @@ private:
     std::pair<std::pair<int, int >, char> GetBetterMove(char symb);
 
     int GetFirstMoveOnAngle(char symb, FIELD* field);
-    std::pair<std::pair<int, int >, char> GetSecondMoveOnAngle(char symb, FIELD* field);
+    int GetSecondMoveOnAngle(char symb, FIELD* field);
+    void GetThirdMoveOnAngle(char symb, FIELD* field);
+
+    int TypeFirstMove;
+    int TypeSecondMove;
+
     std::pair<std::pair<int, int >, char> PreventWin(char symb);
     std::pair<std::pair<int, int >, char> GetWinnerMove(char symb, FIELD* field);
     std::pair<int, int> SearchWinnerMoveForLine(FIELD* field, int line, int search);
@@ -27,6 +32,7 @@ private:
 
     int move = 0;
 public:
+
     PLAYER(FIELD* field, int type_pl, char symbol_player);
     int MakeMovePL(int x, int y, char type_player, FIELD* field);
     bool SearchForAi(int type_search, char symb, int line, FIELD* field);
@@ -36,8 +42,9 @@ public:
     int type_player;
     int count = 0;
     int count_move = 0;
-    std::pair<std::pair<int, int >, char> InformationFist;
-
+    std::pair<std::pair<int, int >, char> InformationFirst;
+    std::pair<std::pair<int, int >, char> InformationSecond;
+    std::pair<std::pair<int, int >, char> InformationThird;
 
 };
 

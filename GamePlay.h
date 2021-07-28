@@ -19,6 +19,7 @@ private:
 
 public:
     void StartGame(int TypeGame);
+    int EndGame();
 
     GamePlay(int TypeFirstPl, int TypeSecondPl, ARBITR*);
     ~GamePlay();

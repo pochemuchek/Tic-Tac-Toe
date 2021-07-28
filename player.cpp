@@ -33,26 +33,26 @@ int PLAYER::MakeMovePL(int x, int y, char type_player, FIELD* current_field)
         return current_field->MakeMoveF(x,y,symbol);
     }
     else if(type_player == TYPE_PLAYER::AI){
-        std::cout<<"MAkeMOve";
-        std::pair<std::pair<int, int>, char> InformationMM;
-        if(GetWinnerMove(symbol, current_field).first.first == -1 && PreventWin(symbol).first.first == -1){
-            InformationMM = GetBetterMove(symbol);
-            return current_field->MakeMoveF(InformationMM.first.second,//информация правильно доходит
-                                           InformationMM.first.first,
-                                           InformationMM.second);
+        std::cout<<"MAkeMOve  ";
+        std::pair<std::pair<int, int>, char> InformationGWM, InformationPW;
+        InformationGWM = GetWinnerMove(symbol, current_field);
+        InformationPW = PreventWin(symbol);
+        if(InformationGWM.first.first != -1){
+                    return current_field->MakeMoveF(InformationGWM.first.first,
+                                                    InformationGWM.first.second,
+                                                    InformationGWM.second);
 
         }
-        else if(PreventWin(symbol).first.first != -1){
-            InformationMM = PreventWin(symbol);
-            return current_field->MakeMoveF(InformationMM.first.first,
-                                            InformationMM.first.second,
-                                            SYMBOL::tac);//can be smth wrong
+        else if(InformationGWM.first.first == -1 && InformationPW.first.first != -1){
+            return current_field->MakeMoveF(InformationPW.first.first,
+                                           InformationPW.first.second,
+                                           SYMBOL::tac);
         }
         else{
-            InformationMM = GetWinnerMove(symbol, current_field);
-            return current_field->MakeMoveF(InformationMM.first.first,
-                                           InformationMM.first.second,
-                                           InformationMM.second);
+            InformationGWM = GetBetterMove(symbol);
+            return current_field->MakeMoveF(InformationGWM.first.second,
+                                            InformationGWM.first.first,
+                                            InformationGWM.second);
         }
     }
     return ERRORS::YES;
@@ -62,89 +62,141 @@ int PLAYER::MakeMovePL(int x, int y, char type_player, FIELD* current_field)
 std::pair<std::pair<int, int>, char> PLAYER::GetBetterMove(char symb)
 {
 
-    if(count_move<2){
+    if(count_move = 1){
         count_move++;
-        GetFirstMoveOnAngle(symb, current_field);
-        return GetInfo(InformationFist.first.first, InformationFist.first.second, InformationFist.second);
+        TypeFirstMove = GetFirstMoveOnAngle(symb, current_field);
+        return GetInfo(InformationFirst.first.first, InformationFirst.first.second, InformationFirst.second);
     }
-    else{
-        return GetSecondMoveOnAngle(symb, current_field);
+    else if (count_move = 2){
+        count_move++;
+        TypeSecondMove = GetSecondMoveOnAngle(symb, current_field);
+        return InformationSecond;
+    }else{
+        return InformationThird;
     }
 }
 
 int PLAYER::GetFirstMoveOnAngle(char symb, FIELD* current_field)
 {
     if(current_field->field[1][1] == SYMBOL::no){ // GetInfo return first x, second y, third symb
-        InformationFist = GetInfo(1, 1, symb);
+        InformationFirst = GetInfo(1, 1, symb);
         return 1;
 
     }
     else if(current_field->field[0][0] == SYMBOL::no){
-        InformationFist = GetInfo(0, 0, symb);
+        InformationFirst = GetInfo(0, 0, symb);
         return 2;
 
     }
     else if(current_field->field[2][0] == SYMBOL::no){
-        InformationFist = GetInfo(2, 0, symb);
+        InformationFirst = GetInfo(2, 0, symb);
         return 3;
 
     }
     else if(current_field->field[2][2] == SYMBOL::no){
-        InformationFist = GetInfo(2, 2, symb);
+        InformationFirst = GetInfo(2, 2, symb);
         return 4;
 
     }
     else if(current_field->field[0][2] == SYMBOL::no){
-         InformationFist = GetInfo(0, 2, symb);
+         InformationFirst = GetInfo(0, 2, symb);
          return 5;
 
     }else{
-    InformationFist = GetInfo(0, 2, symb);
-    return 6;
+    return -1;
     }
 }
 
-std::pair<std::pair<int, int>, char> PLAYER::GetSecondMoveOnAngle(char symb, FIELD* current_field)
+int PLAYER::GetSecondMoveOnAngle(char symb, FIELD* current_field)
 {
     std::cout<<"Second";
-    int TypeFirstMove = GetFirstMoveOnAngle(symb, current_field);
-
     if(TypeFirstMove == 1){
         GetFirstMoveOnAngle(symb, current_field);
     }
     else if(TypeFirstMove == 2){
-        if(current_field->field[2][0] == SYMBOL::no){
-            return GetInfo(2,0,symb);
+        if(current_field->field[2][2] == SYMBOL::no){
+            InformationSecond = GetInfo(2,2,symb);
+            return 2;
         }
-        else{
-            return GetInfo(0,2,symb);
-        }
+
     }
     else if(TypeFirstMove == 3){
-        if(current_field->field[2][2] == SYMBOL::no){
-            return GetInfo(0,0,symb);
-        }
-        else{
-            return GetInfo(2,2,symb);
+        if(current_field->field[0][2] == SYMBOL::no){
+            InformationSecond = GetInfo(0,2,symb);
+            return 3;
         }
     }
     else if(TypeFirstMove == 4){
-        if(current_field->field[0][2] == SYMBOL::no){
-            return GetInfo(0,2,symb);
+        if(current_field->field[1][0] == SYMBOL::no){
+            InformationSecond = GetInfo(1,0,symb);
+            return 41;
         }
         else{
-            return GetInfo(2,0,symb);
+            InformationSecond = GetInfo(0,1,symb);
+            return 42;
         }
     }
     else if(TypeFirstMove == 5){
-        if(current_field->field[0][0] == SYMBOL::no){
-            return GetInfo(0,0,symb);
-        }
-        else{
-            return GetInfo(2,2,symb);
+        if(current_field->field[1][0] == SYMBOL::no){
+            InformationSecond = GetInfo(1,0,symb);
+            return 51;
+        } else{
+            InformationSecond = GetInfo(0,1,symb);
+            return 52;
         }
     }
-    return GetInfo(-1,-1,symb);
+    else if(TypeFirstMove == -1){
+        if(current_field->field[2][1] == SYMBOL::no){
+            InformationSecond = GetInfo(2,1,symb);
+            return 6;
+        }
+    }
+    return -1;
+}
+
+void PLAYER::GetThirdMoveOnAngle(char symb, FIELD* current_field)
+{
+    if(TypeSecondMove == 2){
+        if(current_field->field[0][2] == SYMBOL::no){
+            InformationThird = GetInfo(0,2,symb);
+        }
+        else{
+            InformationThird = GetInfo(2,0,symb);
+        }
+
+    }
+    else if(TypeSecondMove == 3){
+        if(current_field->field[2][2] == SYMBOL::no){
+            InformationThird = GetInfo(2,2,symb);
+        }
+        else{
+            InformationThird = GetInfo(0,0,symb);
+        }
+    }
+    else if(TypeSecondMove == 41){
+        if(current_field->field[0][1] == SYMBOL::no){
+            InformationThird = GetInfo(0,1,symb);
+        }
+        else{
+            InformationThird = GetInfo(2,1,symb);
+        }
+    }
+    else if(TypeSecondMove == 42){
+        if(current_field->field[1][2] == SYMBOL::no){
+            InformationThird = GetInfo(1,2,symb);
+        }
+        else{
+            InformationThird = GetInfo(2,1,symb);
+        }
+    }
+    else if(TypeSecondMove == 6){
+        if(current_field->field[1][0] == SYMBOL::no){
+            InformationThird = GetInfo(1,0,symb);
+        }
+        else{
+            InformationThird = GetInfo(1,2,symb);
+        }
+    }
 }
 
 std::pair<std::pair<int, int>, char> PLAYER::PreventWin(char symbol)
@@ -156,13 +208,14 @@ std::pair<std::pair<int, int>, char> PLAYER::PreventWin(char symbol)
     }
 
    return GetWinnerMove(symbol, current_field);
+
 }
 
 
-std::pair<std::pair<int, int>, char> PLAYER::GetWinnerMove(char symb, FIELD* current_field)
+pair<pair<int, int>, char> PLAYER::GetWinnerMove(char symb, FIELD* current_field)
 {
-    std::cout<<"Winner";
-    std::pair<int, int> Info;
+    cout<<"Winner";
+    pair<int, int> Info;
     for(int i = 0; i < 3; i++){//исчем где из верт/столбов есть два знака
         if(SearchForAi(1, symb, i, current_field) == true){//проверяем наличие двух знаков в одном из столбцов
             Info = SearchWinnerMoveForLine(current_field, i, 0);
@@ -190,11 +243,12 @@ std::pair<std::pair<int, int>, char> PLAYER::GetWinnerMove(char symb, FIELD* cur
 }
 std::pair<int, int> PLAYER::SearchWinnerMoveForLine(FIELD *current_field, int line, int search)
 {
-    std::cout<<"searchWINNERlINE";
-    std::pair<int, char> Info;
+    cout<<"searchWINNERlINE";
+    pair<int, char> Info;
     switch (search) {
         case 0://vert
-        for(int i = 0; i <= current_field->w; i++){
+        cout<<0;
+        for(int i = 0; i < current_field->w; i++){
             if(current_field->field[line][i] == SYMBOL::no){
                 Info.first = line;
                 Info.second = i;
@@ -203,7 +257,8 @@ std::pair<int, int> PLAYER::SearchWinnerMoveForLine(FIELD *current_field, int li
         }
         break;
         case 1://horiz
-        for(int i = 0; i <= current_field->w; i++){
+        cout<<1;
+        for(int i = 0; i < current_field->w; i++){
             if(current_field->field[i][line] == SYMBOL::no){
                 Info.first = i;
                 Info.second = line;
@@ -217,7 +272,7 @@ std::pair<int, int> PLAYER::SearchWinnerMoveForLine(FIELD *current_field, int li
 }
 std::pair<int, int> PLAYER::SearchWinnerMoveForDiag(FIELD* current_field, char symb, int search)
 {
-   std::cout<<"searchWINNERDIAGКК";
+   std::cout<<"searchWINNERDIAG";
    std::pair<int, int> Info;
    switch(search){
    case 0://diag right
@@ -283,7 +338,7 @@ bool PLAYER::SearchForAi(int type_search, char symb, int line, FIELD* current_fi
             int i = 2;
             int j = 0;
             while(i >= 0 && j < 3){
-                if(current_field->field[i][j] == symb){
+                if(current_field->field[j][i] == symb){
                     count++;
                 }
                 i--;

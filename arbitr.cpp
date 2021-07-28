@@ -9,6 +9,9 @@ ARBITR::ARBITR()
 }
 int ARBITR::CheckWinner(FIELD *Field)
 {
+    Count_0 = 0;
+    Count_X = 0;
+
     if(CheckWinHorizontal(Field) == true){
         return ERRORS::WIN;
     }
@@ -95,12 +98,10 @@ bool ARBITR::CheakWinDiagRight(FIELD *Field)
     int i = 2;
     int j = 0;
     while(j < 3 && i >= 0){
-            if(Field->Field[i][j] != SYMBOL::tic && Field->Field[i][j] == SYMBOL::tac &&
-               Field->Field[i][j] == SYMBOL::no){
+            if(Field->Field[i][j] == SYMBOL::tac){
                 Count_0++;
             }
-            else if(Field->Field[i][j] == SYMBOL::tic && Field->Field[i][j] != SYMBOL::no &&
-                    Field->Field[i][j] != SYMBOL::tac){
+            else if(Field->Field[i][j] == SYMBOL::tic){
                 Count_X++;
             }
             j++;
