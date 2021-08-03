@@ -50,8 +50,8 @@ int PLAYER::MakeMovePL(int x, int y, char type_player, FIELD* current_field)
         }
         else{
             InformationGWM = GetBetterMove(symbol);
-            return current_field->MakeMoveF(InformationGWM.first.second,
-                                            InformationGWM.first.first,
+            return current_field->MakeMoveF(InformationGWM.first.first,
+                                            InformationGWM.first.second,
                                             InformationGWM.second);
         }
     }
@@ -201,13 +201,14 @@ void PLAYER::GetThirdMoveOnAngle(char symb, FIELD* current_field)
 
 std::pair<std::pair<int, int>, char> PLAYER::PreventWin(char symbol)
 {
+    char symb;
     if(symbol == SYMBOL::tac){// this is using to understand which symbol have human
-        symbol = SYMBOL::tic;
+        symb = SYMBOL::tic;
     }else{
-        symbol = SYMBOL::tac;
+        symb = SYMBOL::tac;
     }
-
-   return GetWinnerMove(symbol, current_field);
+    pair<pair<int, int>, char> Info = GetWinnerMove(symb, current_field);
+   return GetInfo(Info.first.first, Info.first.second, symbol);
 
 }
 
@@ -279,7 +280,7 @@ std::pair<int, int> PLAYER::SearchWinnerMoveForDiag(FIELD* current_field, char s
    {
            int i = 2;
            int j = 0;
-           while(i > 0 && j < 3){
+           while(i >= 0 && j < 3){
                if(current_field->Field[i][j] != symb && current_field->Field[i][j] == SYMBOL::no){
                    Info.first = i;
                    Info.second = j;
@@ -335,14 +336,13 @@ bool PLAYER::SearchForAi(int type_search, char symb, int line, FIELD* current_fi
             break;
         case 2:// diag right
     {
-            int i = 2;
-            int j = 0;
-            while(i >= 0 && j < 3){
-                if(current_field->field[j][i] == symb){
+            for(int i = 2, j = 0; i >= 0 && j <= 2; i--, j++){
+                if(current_field->field[i][j] == symb){
                     count++;
                 }
-                i--;
-                j++;
+                if (current_field->field[i][j] != SYMBOL::no && current_field->field[i][j] != symb){
+                    return false;
+                }
             }
             if(count == 2){
                 return true;
